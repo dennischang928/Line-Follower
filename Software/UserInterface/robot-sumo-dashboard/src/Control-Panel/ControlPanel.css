@@ -1,0 +1,9 @@
+.Navigator {
+    height: 100vh;
+    width: fit-content;
+    padding-inline-start: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #585153;
+    color: #f2e6e3;
+}
