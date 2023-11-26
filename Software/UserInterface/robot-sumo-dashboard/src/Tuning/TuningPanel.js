@@ -4,15 +4,6 @@ import SendIcon from '@mui/icons-material/Send';
 
 const TuningPanel = ({ onUserChangeTuningData, TuningData, onUserClickSend, onUserClickCalibration }) => {
 
-    const defaultKP = 10;
-    const defaultKD = 10;
-    const defaultMaxSpeed = 10;
-
-    // UseEffect for KP slider
-    useEffect(() => {
-        onUserChangeTuningData({ KP: defaultKP, KD: defaultKD, Max_Speed: defaultMaxSpeed });
-    }, []);
-
     return (
         <div style={{ paddingTop: "40px", width: "40%", minWidth: "300px" }}>
             <Stack spacing={3} direction="column">
@@ -22,9 +13,8 @@ const TuningPanel = ({ onUserChangeTuningData, TuningData, onUserClickSend, onUs
                         disabled={false}
                         marks={false}
                         step={0.1}
-                        max={10}
-                        min={1}
-                        defaultValue={defaultKP}
+                        max={8000}
+                        min={0}
                         value={TuningData.KP}
                         size="small"
                         valueLabelDisplay="on"
@@ -41,9 +31,8 @@ const TuningPanel = ({ onUserChangeTuningData, TuningData, onUserClickSend, onUs
                         disabled={false}
                         marks={false}
                         step={0.01}
-                        max={10}
-                        min={1}
-                        defaultValue={defaultKD}
+                        max={8000}
+                        min={0}
                         size="small"
                         value={TuningData.KD}
                         valueLabelDisplay="on"
@@ -61,7 +50,6 @@ const TuningPanel = ({ onUserChangeTuningData, TuningData, onUserClickSend, onUs
                         max={16384}
                         min={1}
                         value={TuningData.Max_Speed}
-                        defaultValue={defaultMaxSpeed}
                         size="small"
                         valueLabelDisplay="on"
                         onChange={(e) => {

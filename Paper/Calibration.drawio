@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" modified="2023-11-26T04:29:20.973Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="hrIClpi39NPtN06OXP5j" version="22.1.4" type="google">
+  <diagram name="第 1 页" id="JUK3hNGQ3o_vUAEwOk8d">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-1" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Sensor Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="480" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sQmzoOub_Y1sH0wgAqIa-2" target="sQmzoOub_Y1sH0wgAqIa-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-4" value="Calibration Command: &quot;C0&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="sQmzoOub_Y1sH0wgAqIa-3">
+          <mxGeometry x="-0.0148" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-2" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Mother Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="180" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sQmzoOub_Y1sH0wgAqIa-7" target="sQmzoOub_Y1sH0wgAqIa-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-12" value="Confirm: &quot;-1&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="sQmzoOub_Y1sH0wgAqIa-11">
+          <mxGeometry x="0.0056" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-3" value="Start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="1" source="sQmzoOub_Y1sH0wgAqIa-7" target="xMVx0U0fLGiqQ1Z_v97G-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-7" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Sensor Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="480" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="sQmzoOub_Y1sH0wgAqIa-10" target="xMVx0U0fLGiqQ1Z_v97G-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-9" value="Receive Confirm message &quot;-1&quot;?" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="xMVx0U0fLGiqQ1Z_v97G-8">
+          <mxGeometry x="-0.0693" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sQmzoOub_Y1sH0wgAqIa-10" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Mother Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="180" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="xMVx0U0fLGiqQ1Z_v97G-2" target="xMVx0U0fLGiqQ1Z_v97G-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="488" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-27" value="Done: &quot;-3&quot;&amp;nbsp;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Not done: &quot;-2&quot;&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="xMVx0U0fLGiqQ1Z_v97G-26">
+          <mxGeometry x="-0.0541" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-2" value="Run Calibration algorithm for 5 second" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="480" y="400" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xMVx0U0fLGiqQ1Z_v97G-7" target="xMVx0U0fLGiqQ1Z_v97G-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="460" />
+              <mxPoint x="460" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-18" value="Inquiry if calibraiton done?&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&quot;c0&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="xMVx0U0fLGiqQ1Z_v97G-17">
+          <mxGeometry x="-0.0095" relative="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xMVx0U0fLGiqQ1Z_v97G-7" target="xMVx0U0fLGiqQ1Z_v97G-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-33" value="Receive message &quot;-3&quot;?" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="xMVx0U0fLGiqQ1Z_v97G-31">
+          <mxGeometry x="0.0222" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-7" value="Rotate the robot" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="200" y="420" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xMVx0U0fLGiqQ1Z_v97G-30" value="Stop Rotating" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="190" y="560" width="100" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

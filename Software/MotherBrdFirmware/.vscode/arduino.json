@@ -1,6 +1,0 @@
-{
-    "port": "/dev/tty.usbserial-A50285BI",
-    "board": "arduino:avr:uno",
-    "programmer": "avrisp",
-    "sketch": "LineFollowerFirmware.ino"
-}

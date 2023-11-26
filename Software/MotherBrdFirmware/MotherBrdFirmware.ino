@@ -1,6 +1,7 @@
 #include "RF24.h"
 #include <EasyTransferI2C.h>
 #include <Wire.h>
+#include <Tone.h>
 
 #define RPWM_PIN A3
 #define RENABLE_PIN 2
@@ -14,8 +15,6 @@
 
 #define CE_PIN A1
 #define CSN_PIN 10
-
-#include <Tone.h>
 
 EasyTransferI2C ET;
 EasyTransferI2C ER;
@@ -41,11 +40,12 @@ RF24 radio(CE_PIN, CSN_PIN);
 
 uint8_t address[][6] = {"1Node", "2Node"}; // Computer as the master
 
-int Kp = 0;
-
-int Kd = 0;
-
-int MaxSpeed = 0;
+boolean IsDebugMode = false;
+boolean IsPIDLoopStart = false;
+float Kp = 500;
+float Kd = 0;
+int Kdd = 10;
+float MaxSpeed = 2000;
 
 class Motor
 {
@@ -55,7 +55,7 @@ public:
   int TargetVelocity = 0;
   int CurrentVelocity = 0;
   float acceleration = 0;
-  float time_interval = 10.;
+  float time_interval = 6.;
   long time_used = 0;
 
   byte EN_PIN = 0;
@@ -78,12 +78,12 @@ public:
     digitalWrite(DIR_PIN, LOW);
 
     MotorFrequencyHelper.begin(PWM_PIN);
-    MotorFrequencyHelper.play(23000);
+    MotorFrequencyHelper.play(1000);
     delay(2);
-    MotorFrequencyHelper.play(0);
+    TuneSpeed(0);
   }
 
-  void setTargetVelocity(int TargetVelocity_) //
+  void setTargetVelocity(int TargetVelocity_)
   {
     TargetVelocity = TargetVelocity_;
     acceleration = (TargetVelocity - CurrentVelocity) / time_interval;
@@ -93,40 +93,47 @@ public:
 
   void TuneSpeed(int Value)
   {
-    digitalWrite(EN_PIN, HIGH);
-
     digitalWrite(DIR_PIN, Value < 0 ? LOW : HIGH);
-
     if (Value != 0)
     {
       digitalWrite(BRAKE_PIN, HIGH);
-      MotorFrequencyHelper.play(map(constrain(abs(Value), 0, 16384), 1, 16384, 3000, 26000));
+      int mappedValue = map(constrain(abs(Value), 0, 16384), 1, 16384, 1000, 26000);
+      MotorFrequencyHelper.play(mappedValue);
     }
     else
     {
       digitalWrite(BRAKE_PIN, LOW);
-      MotorFrequencyHelper.play(map(constrain(abs(Value), 0, 16384), 1, 16384, 3000, 26000));
     }
   }
 
   boolean Motor_Loop()
   {
-    time_used = time_used + (millis() - timer2); // accumulate the time used to accelerate
+    unsigned long currentMillis = millis();
+    unsigned long timeDiff = currentMillis - timer2;
+    time_used += timeDiff;
+
     if (time_used >= time_interval)
-    { // if time used is larger than our expected time interval => directly set the motor to our target Velocity
+    {
       CurrentVelocity = TargetVelocity;
     }
     else
     {
-      CurrentVelocity = CurrentVelocity + (millis() - timer2) * acceleration; // v = u + at;
-      timer2 = millis();
+      CurrentVelocity += timeDiff * acceleration;
     }
+
+    timer2 = currentMillis;
     TuneSpeed(CurrentVelocity);
   }
 };
 
 Motor MotorRight;
 Motor MotorLeft;
+
+void FollowerDrive(int L_Velocity, int R_Velocity)
+{
+  MotorRight.TuneSpeed(R_Velocity);
+  MotorLeft.TuneSpeed(-L_Velocity);
+}
 
 void wireSetup()
 {
@@ -144,57 +151,89 @@ void setup()
 {
   Serial.begin(115200);
   wireSetup();
-  if (!radio.begin())
-  {
-    Serial.println(F("radio hardware is not responding!!"));
-    while (1)
-    {
-      Serial.println(F("radio hardware is not responding!!"));
-    } // hold in infinite loop
-  }
+  radio.begin();
 
-  radio.setPALevel(RF24_PA_MAX); // RF24_PA_MAX is default.
+  radio.setPALevel(RF24_PA_HIGH); // RF24_PA_MAX is default.
   radio.openWritingPipe(address[1]);
   radio.openReadingPipe(1, address[0]);
   radio.startListening(); // put radio in RX mode
 
   MotorRight.SetupMotor(RDIR_PIN, RBRAKE_PIN, RPWM_PIN, RENABLE_PIN); // byte DIR_PIN_, byte BRAKE_PIN_, byte PWM_PIN_, byte EN_PIN_
   MotorLeft.SetupMotor(LDIR_PIN, LBRAKE_PIN, LPWM_PIN, LENABLE_PIN);
-  MotorRight.setTargetVelocity(0);
-  MotorLeft.setTargetVelocity(0);
+  FollowerDrive(0, 0);
 }
 
 long timer = millis();
-char MessageReceived[20] = "";
+char MessageReceived[30] = "";
 boolean IsCalibrating = false;
+long ErrorSendTimer = millis();
+float Error = 0;
+float LastError = 0;
+
+struct TXMESSAGESTRUCT
+{
+  char Command;
+  float Suffix;
+};
+
+TXMESSAGESTRUCT TxMessage;
+float thiskd = 0;
+float lastkddv = 0;
+
+void PIDLoop()
+{
+
+  if (IsPIDLoopStart)
+  {
+    GetError();
+    int output = Kp * Error + Kd * (Error - LastError);
+    output = constrain(output, -2 * MaxSpeed, 2 * MaxSpeed);
+    if (Error > 0)
+      FollowerDrive(MaxSpeed, MaxSpeed - output);
+    else
+      FollowerDrive(MaxSpeed - abs(output), MaxSpeed);
+
+    LastError = Error;
+  }
+}
 
 void loop()
 {
-  if (IsCalibrating == false)
-  {
-    GetError();
-  }
-  CommanderLoop();
-
+  DebugLoop();
+  PIDLoop();
   if (IsCalibrating == true)
   {
     CalibrationCommandHandler();
   }
 
-  MotorRight.Motor_Loop();
-  MotorLeft.Motor_Loop();
+  CommanderLoop();
+}
+
+void DebugLoop()
+{
+  if (millis() - ErrorSendTimer >= 1000 && IsDebugMode == true)
+  {
+    radio.stopListening(); // put radio in TX mode
+    GetError();
+    TxMessage.Command = 'E';
+    TxMessage.Suffix = Error;
+    ErrorSendTimer = millis();
+    delay(1);
+    radio.write(&TxMessage, sizeof(TxMessage));
+    radio.startListening(); // put radio in TX mode
+  }
 }
 
 void GetError()
 {
-  sendData.cmd = 'e';
+  sendData.cmd = 'E';
   sendData.order = 0;
   ET.sendData(I2C_SLAVE_ADDRESS);
-
   if (ER.receiveData())
   {
-    Serial.println(receiveData.result);
+    Error = receiveData.result;
   }
+  Serial.println(Error);
 }
 
 void CommanderLoop()
@@ -203,6 +242,7 @@ void CommanderLoop()
   {
     radio.read(&MessageReceived, sizeof(MessageReceived)); // fetch payload from FIFO
     Serial.println(MessageReceived);
+
     if (MessageReceived[0] == 'D')
     {
       DrivingCommand(MessageReceived[1]);
@@ -210,6 +250,11 @@ void CommanderLoop()
     else if (MessageReceived[0] == 'T')
     {
       TuningCommandHandler(MessageReceived);
+    }
+    else if (MessageReceived[0] == 'B')
+    {
+      IsDebugMode = MessageReceived[1] == 'E' ? true : false;
+      Serial.println(IsDebugMode);
     }
     else if (MessageReceived[0] == 'C')
     {
@@ -230,7 +275,7 @@ void CommanderLoop()
           {
             IsCalibrating = true;
             Serial.println("Calibration Start");
-            return;
+            break;
           }
           else
           {
@@ -241,6 +286,14 @@ void CommanderLoop()
         {
           Serial.println("Calibration Failed");
         }
+      }
+    }
+    else if (MessageReceived[0] == 'K')
+    {
+      IsPIDLoopStart = MessageReceived[1] == 'E' ? true : false;
+      if (IsPIDLoopStart == false)
+      {
+        FollowerDrive(0, 0);
       }
     }
   }
@@ -259,9 +312,9 @@ void CalibrationCommandHandler()
     }
     else if (receiveData.result == -3.0)
     {
+      IsCalibrating = false;
       FollowerDrive(0, 0);
       Serial.println("Calibration Done");
-      IsCalibrating = false;
     }
   }
 }
@@ -271,16 +324,16 @@ void TuningCommandHandler(String inputCommand)
   int pStartIndex = inputCommand.indexOf('P');
   int pEndIndex = inputCommand.indexOf('D');
   String pValueString = inputCommand.substring(pStartIndex + 1, pEndIndex);
-  float Kp = pValueString.toFloat();
+  Kp = pValueString.toFloat();
 
   int dStartIndex = inputCommand.indexOf('D');
   int dEndIndex = inputCommand.indexOf('M');
   String dValueString = inputCommand.substring(dStartIndex + 1, dEndIndex);
-  float Kd = dValueString.toFloat();
+  Kd = dValueString.toFloat();
 
   int maxspeedStartIndex = inputCommand.indexOf("MxSP");
   String maxspeedValueString = inputCommand.substring(maxspeedStartIndex + 4);
-  int MaxSpeed = maxspeedValueString.toInt();
+  MaxSpeed = maxspeedValueString.toInt();
 
   Serial.print(Kp);
   Serial.print("  ");
@@ -315,10 +368,4 @@ void DrivingCommand(char Direction)
   {
     FollowerDrive(0, 0);
   }
-}
-
-void FollowerDrive(int L_Velocity, int R_Velocity)
-{
-  MotorRight.setTargetVelocity(R_Velocity);
-  MotorLeft.setTargetVelocity(-L_Velocity);
 }

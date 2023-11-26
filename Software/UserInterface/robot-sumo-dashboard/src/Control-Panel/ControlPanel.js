@@ -4,6 +4,8 @@ import HandymanTwoToneIcon from '@mui/icons-material/HandymanTwoTone';
 
 import "./ControlPanel.css"
 
+
+
 const theme = createTheme({
 
     palette: {
@@ -17,7 +19,7 @@ const theme = createTheme({
 })
 
 const ControlPanel = ({ ModeSelected, ChangeMode }) => {
-    const Feature = ["Driving", "Tuning", "Color Selector"]
+    const Feature = ["Debug", "Driving", "Tuning"]
     return (
         <List className="Navigator" variant="outlined">
             <ListItem ></ListItem>
@@ -25,7 +27,7 @@ const ControlPanel = ({ ModeSelected, ChangeMode }) => {
                 return (
                     <ListItem key={i} style={{ "width": "fill-available" }}>
                         <ListItemButton onClick={() => {
-                            ChangeMode({ ModeSelected: i });
+                            ChangeMode(i);
                         }}
                             style={{ backgroundColor: ModeSelected == i ? "#de6b28" : "" }}
                             href="#simple-list" >

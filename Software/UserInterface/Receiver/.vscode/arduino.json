@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "port": "/dev/tty.usbmodem21201",
+    "programmer": "avrisp",
+    "sketch": "Receiver.ino"
+}

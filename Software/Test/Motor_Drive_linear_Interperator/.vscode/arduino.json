@@ -1,5 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "port": "/dev/tty.usbserial-A50285BI",
-    "sketch": "Motor_Drive_linear_Interperator.ino"
-}

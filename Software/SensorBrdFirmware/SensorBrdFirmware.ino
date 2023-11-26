@@ -45,23 +45,26 @@ void setup()
   trigger = false;
 
   for (int i = 0; i < 15; i++)
+  {
     EEPROM.get(i * 4, sensorMin[i]);
-  for (int i = 0; i < 15; i++)
-    EEPROM.get(15 * 4 + i * 4, sensorMax[i]);
-
-  delay(2000);
+    // Serial.print(sensorMin[i]);
+    // Serial.print("  ");
+    // Serial.print(sensorMin[i]);
+  }
+  Serial.println("");
   for (int i = 0; i < 15; i++)
   {
-    Serial.print(sensorMin[i]);
-    Serial.print("\t");
-    Serial.println(sensorMax[i]);
+    EEPROM.get(15 * 4 + i * 4, sensorMax[i]);
+    // Serial.print(sensorMax[i]);
+    // Serial.print("  ");
+    // Serial.print(sensorMax[i]);
   }
-  delay(2000);
+  // Serial.println("");
 }
+
 void loop()
 {
 
-  // Serial.println(IsCalibrationStart);
   float avg = 0, sum = 0;
   boolean online = false;
   for (int i = 0; i <= 14; i++)
@@ -69,16 +72,13 @@ void loop()
     sensorValue[i] = (float)readSensor(14 - i);
     resultant[i] = map(sensorValue[i], sensorMin[i], sensorMax[i], 0, 3);
 
-    // Serial.print(resultant[i]);
-    // Serial.print("  ");
-
     if (resultant[i] > 1)
       online = true;
 
     avg += (float)(resultant[i]) * i;
     sum += (float)(resultant[i]);
   }
-  // Serial.println("  ");
+
   if (!online)
     Drift = lastDrift;
   else
@@ -88,7 +88,6 @@ void loop()
   }
 
   error = Drift - 7.0;
-
   checkWire();
   cali();
 }
@@ -160,7 +159,7 @@ void checkWire()
       //   ET.sendData(I2C_MASTER_ADDRESS);
       //   break;
 
-    case 'e':
+    case 'E':
       sendData.result = error;
       ET.sendData(I2C_MASTER_ADDRESS);
       break;

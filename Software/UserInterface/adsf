@@ -1,0 +1,67 @@
+import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
+import { BrowserSerial } from "browser-serial";
+
+
+
+const UserInterface = () => {
+    const serial = new BrowserSerial();
+    let ConnectedPortWriter;
+    let writer
+    const [IsConnected, setIsConnected] = useState(false);
+    const [ControlMode, setControlMode] = useState();
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress, true)
+    }, [])
+
+    useEffect(() => {
+        console.log(IsConnected); // Log whenever IsConnected changes
+    }, [IsConnected]);
+
+    // const handleKeyPress = (event) => {
+    //     CommandHandler(event.code)
+    // }
+
+    // const CommandHandler = (PressedKeyCode) => {
+    //     let MessageToSend = ""
+    //     if (PressedKeyCode == 'KeyA') {
+    //         MessageToSend = "L"
+    //     }
+    //     if (PressedKeyCode == 'KeyD') {
+    //         MessageToSend = "R"
+    //     }
+    //     if (PressedKeyCode == 'KeyS') {
+    //         MessageToSend = "B"
+    //     }
+    //     if (PressedKeyCode == 'KeyW') {
+    //         MessageToSend = "F"
+    //     }
+    //     SerialSend({ Prefix: "K", Suffix: MessageToSend })
+    // }
+
+    // const SerialSend = async ({ Prefix, Suffix }) => {
+    //     await navigator.serial.getPorts().then(async (ports) => {
+    //         console.log(ports);
+    //         const encoder = new TextEncoder();
+    //         writer = await ports[0].writable.getWriter()
+    //         await writer.write(encoder.encode(`${Prefix}${Suffix}\n`));
+    //         writer.releaseLock();
+    //     })
+    // }
+
+    const OnUserClick = async () => {
+        serial.connect()
+    }
+
+    return (
+        <div>
+            <h1>Line Follower Console</h1>
+            <Button onClick={OnUserClick} variant={IsConnected ? "contained" : "outlined"}>{IsConnected ? "Connected" : "Connect Device"}</Button>
+            {/* <Button onClick={onUserClickDrivingMode} variant={ControlMode == 1 ? ("contained") : ("outlined")}>{ControlMode == 1 ? ("Driving Mode Enabled") : ("Enable Driving Mode")} </Button> */}
+        </div>
+    );
+}
+
+export default UserInterface

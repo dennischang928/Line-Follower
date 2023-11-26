@@ -1,0 +1,42 @@
+<mxfile host="app.diagrams.net" modified="2023-11-26T04:38:44.423Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="dJFrpEPZIIDRhgAP0s6p" version="22.1.4" type="google">
+  <diagram name="第 1 页" id="U-7TljvAOje7co9kyii-">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="WL0j7NzqmGmxd8fE0Qle-1" target="WL0j7NzqmGmxd8fE0Qle-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="370" y="200" />
+              <mxPoint x="370" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-6" value="Inquiry Error Value: &quot;E0&quot;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="WL0j7NzqmGmxd8fE0Qle-5">
+          <mxGeometry x="-0.0292" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-1" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Mother Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="220" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="WL0j7NzqmGmxd8fE0Qle-4" target="WL0j7NzqmGmxd8fE0Qle-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="235" />
+              <mxPoint x="470" y="235" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-8" value="Transmit Error Value" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="WL0j7NzqmGmxd8fE0Qle-7">
+          <mxGeometry x="0.0066" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WL0j7NzqmGmxd8fE0Qle-4" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Sensor Board&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="550" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
